@@ -2,6 +2,7 @@
 using Northwind.Business.Abstract;
 using Northwind.Business.Concrete;
 using Northwind.DataAccess.Concrete.EntityFramework;
+using Northwind.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,6 +41,13 @@ namespace Northwind.WebFormsUI
             cbxCategory.DataSource = _categoryService.GetAll();
             cbxCategory.DisplayMember = "CategoryName";
             cbxCategory.ValueMember = "CategoryId";
+
+            cbxCategoryId.DataSource = _categoryService.GetAll();
+            cbxCategoryId.DisplayMember = "CategoryName";
+            cbxCategoryId.ValueMember = "CategoryId";
+
+
+
         }
 
         private void LoadProducts()
@@ -77,6 +85,26 @@ namespace Northwind.WebFormsUI
                 LoadProducts();
             }
             
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            _productService.Add(new Product
+            {
+                CategoryId = Convert.ToInt32(cbxCategoryId.SelectedValue),
+                ProductName = tbxProductName2.Text,
+                QuantityPerUnit= tbxQuantityPerUnit.Text,
+                UnitPrice=Convert.ToDecimal(tbxUnitPrice.Text),
+                UnitsInStock=Convert.ToInt16(tbxStock.Text)
+                
+            });
+            MessageBox.Show("Ürün Kaydedildi");
+            LoadProducts();
         }
     }
 }
