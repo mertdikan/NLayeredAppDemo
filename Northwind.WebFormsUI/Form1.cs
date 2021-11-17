@@ -138,11 +138,30 @@ namespace Northwind.WebFormsUI
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            _productService.Delete(new Product { ProductId = Convert.ToInt32(dgwProduct.CurrentRow.Cells[0].Value) 
+            if(dgwProduct.CurrentRow != null)
+            {
+                try
+                {
+                    _productService.Delete(new Product
+                    {
+                        ProductId = Convert.ToInt32(dgwProduct.CurrentRow.Cells[0].Value)
+
+                    });
+                    
+                    MessageBox.Show("Ürün silindi");
+                    LoadProducts();
+                }
+                catch (Exception exception )
+                {
+
+                    MessageBox.Show(exception.InnerException.InnerException.Message);
+                    
+                }
+                
+            }
             
-            });
-            MessageBox.Show("Ürün silindi");
-            LoadProducts(); 
+
+            
         }
     }
 }
